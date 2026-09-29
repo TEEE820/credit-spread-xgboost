@@ -4,4 +4,3 @@ data/raw/
 data/processed/
 *.pyc
 .ipynb_checkpoints/
-figures/*.png

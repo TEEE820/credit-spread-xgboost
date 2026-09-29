@@ -44,7 +44,7 @@ def generate_all():
     # 图2：描述统计箱线图
     fig, ax = plt.subplots(figsize=(6, 4))
     ax.boxplot([data[t].dropna() for t in targets],
-               labels=[RATING_NAMES[t.replace("spread_", "")] for t in targets])
+               tick_labels=[RATING_NAMES[t.replace("spread_", "")] for t in targets])
     ax.set_title("图2 各品种利差分布")
     fp = os.path.join(FIG, "fig2_boxplot.png")
     fig.savefig(fp, dpi=150, bbox_inches="tight"); plt.close(fig); files.append(fp)
@@ -91,8 +91,8 @@ def generate_all():
     perf_plot["品种"] = perf_plot["rating"].map(RATING_NAMES)
     fig, ax = plt.subplots(figsize=(7, 4))
     perf_plot[["品种", "ols", "random_forest", "xgboost"]].set_index("品种").plot.bar(ax=ax)
-    ax.set_title("图9 模型性能对比（测试集 R²）")
-    ax.set_ylabel("R²")
+    ax.set_title("图9 模型性能对比（测试集 $R^2$）")
+    ax.set_ylabel("$R^2$")
     fp = os.path.join(FIG, "fig9_model_performance.png")
     fig.savefig(fp, dpi=150, bbox_inches="tight"); plt.close(fig); files.append(fp)
 
