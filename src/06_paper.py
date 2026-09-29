@@ -147,11 +147,48 @@ def load_table(csv_path):
     return df
 
 
+def shade_paragraph(p, fill="F2F2F2"):
+    pPr = p._p.get_or_add_pPr()
+    shd = OxmlElement("w:shd")
+    shd.set(qn("w:val"), "clear")
+    shd.set(qn("w:color"), "auto")
+    shd.set(qn("w:fill"), fill)
+    pPr.append(shd)
+
+
+def add_code_block(code_lines):
+    """代码块：等宽字体小五号、浅灰底纹、单倍行距。"""
+    for i, code in enumerate(code_lines):
+        p = doc.add_paragraph()
+        r = p.add_run(code if code else " ")
+        set_font(r, "宋体", 9)
+        r.font.name = "Consolas"
+        pf = p.paragraph_format
+        pf.line_spacing = 1.0
+        pf.space_before = Pt(0)
+        pf.space_after = Pt(0 if i < len(code_lines) - 1 else 8)
+        pf.left_indent = Pt(18)
+        shade_paragraph(p, "F2F2F2")
+
+
 # ---------- 解析并生成 ----------
 lines = open(MD, encoding="utf-8").read().splitlines()
 ref_no = 0
+in_code = False
+code_buf = []
 for ln in lines:
     s = ln.strip()
+    if s.startswith("```"):
+        if in_code:
+            add_code_block(code_buf)
+            code_buf = []
+            in_code = False
+        else:
+            in_code = True
+        continue
+    if in_code:
+        code_buf.append(ln)
+        continue
     if not s:
         continue
     if s.startswith("[TBL]"):
