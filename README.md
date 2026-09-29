@@ -2,6 +2,10 @@
 
 **Credit Spread Drivers in China: An Interpretable Machine Learning Approach with XGBoost and SHAP**
 
+![Python](https://img.shields.io/badge/Python-3.10-blue) ![tests](https://img.shields.io/badge/tests-9%20passed-brightgreen) ![XGBoost](https://img.shields.io/badge/XGBoost-2.1.4-orange) ![SHAP](https://img.shields.io/badge/SHAP-0.49-red) ![akshare](https://img.shields.io/badge/data-akshare-lightgrey) ![License](https://img.shields.io/badge/License-MIT-yellow)
+
+![滚动预测预览](figures/fig8_rolling_pred.png)
+
 一个面向学术论文的完整可复现量化研究项目：以中债信用债（中短期票据、商业银行债）与国债收益率的利差为研究对象，融合宏观经济、流动性、股市波动等 10 类外部特征与自回归滞后项，对比 OLS、随机森林与 XGBoost 的样本内解释力，并通过 SHAP 值分解特征贡献、expanding-window 滚动框架检验样本外预测能力。
 
 ---
@@ -11,6 +15,7 @@
 ```
 固收大作业/
 ├── README.md                 # 本文件
+├── LICENSE                   # MIT 开源许可
 ├── requirements.txt          # 依赖（含 xgboost>=2.0,<3 兼容性锁定）
 ├── .gitignore
 ├── src/
