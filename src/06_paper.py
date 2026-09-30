@@ -90,6 +90,7 @@ def set_cell_borders(cell, top=None, bottom=None):
 
 
 def add_three_line_table(df, caption):
+    caption = caption.replace(" ", "　", 1) if " " in caption else caption
     n_rows, n_cols = df.shape
     table = doc.add_table(rows=n_rows + 1, cols=n_cols)
     table.alignment = WD_TABLE_ALIGNMENT.CENTER
@@ -120,6 +121,7 @@ def add_three_line_table(df, caption):
 
 
 def add_figure(png, caption):
+    caption = caption.replace(" ", "　", 1) if " " in caption else caption
     p = doc.add_paragraph()
     p.alignment = WD_ALIGN_PARAGRAPH.CENTER
     r = p.add_run()
@@ -215,7 +217,7 @@ for ln in lines:
             para(body, cn_font="楷体", size=12, align=WD_ALIGN_PARAGRAPH.CENTER, space_after=8)
         elif body.startswith("摘要："):
             p = doc.add_paragraph()
-            r = p.add_run("摘要：")
+            r = p.add_run("【摘　要】")
             set_font(r, "仿宋", 9, bold=True)
             r2 = p.add_run(body[3:])
             set_font(r2, "仿宋", 9)
@@ -223,14 +225,16 @@ for ln in lines:
             p.paragraph_format.space_after = Pt(3)
         elif body.startswith("关键词："):
             p = doc.add_paragraph()
-            r = p.add_run("关键词：")
+            r = p.add_run("【关 键 词】")
             set_font(r, "仿宋", 9, bold=True)
             r2 = p.add_run(body[4:])
             set_font(r2, "仿宋", 9)
             p.paragraph_format.first_line_indent = Pt(18)
             p.paragraph_format.space_after = Pt(3)
         elif body.startswith("中图分类号"):
-            para(body, cn_font="仿宋", size=9, space_after=10)
+            text = body.replace("中图分类号：", "【中图分类号】").replace(
+                "文献标识码：", "【文献标识码】")
+            para(text, cn_font="仿宋", size=9, space_after=10)
         elif body.startswith("REF"):
             ref_no += 1
             text = body[body.index(" ") + 1:]
